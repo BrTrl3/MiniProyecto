@@ -5,7 +5,6 @@ import ed.u2.model.Cita;
 import ed.u2.model.Insumo;
 import ed.u2.model.NodoPaciente;
 import ed.u2.model.Paciente;
-// Importamos la clase única de ordenación y las clases modulares de búsqueda
 import ed.u2.sorting.Ordenador;
 import ed.u2.search.BinarySearch;
 import ed.u2.search.SequentialSearch;
@@ -17,7 +16,6 @@ import java.util.List;
 
 public class Demo {
 
-    /// SOLUCIÓN: Indica la ruta relativa correcta
     private static final String RUTA_CITAS_NORMAL = "src/data/citas_100.csv";
     private static final String RUTA_CITAS_CASI = "src/data/citas_100_casi_ordenadas.csv";
     private static final String RUTA_INVENTARIO = "src/data/inventario_500_inverso.csv";
@@ -25,7 +23,6 @@ public class Demo {
 
     /**
      * Clase interna simple para almacenar las métricas de una sola corrida.
-     * Reemplaza a SortResult.
      */
     private static class RunMetrics {
         final long comparaciones;
@@ -45,27 +42,28 @@ public class Demo {
 
 
     public static void main(String[] args) {
-        System.out.println("--- MINI-PROYECTO U2: AGENDA E INVENTARIO INTELIGENTES ---");
+        System.out.println("----- MINI-PROYECTO U2 ED -----");
 
         // 1. CARGA DE DATOS
         Cita[] citasNormal = CsvLoader.cargarCitas(RUTA_CITAS_NORMAL);
-        Cita[] citasCasi = CsvLoader.cargarCitas(RUTA_CITAS_CASI);
+        Cita[] citasCasiOrdenadas = CsvLoader.cargarCitas(RUTA_CITAS_CASI);
         Insumo[] inventario = CsvLoader.cargarInventario(RUTA_INVENTARIO);
         NodoPaciente headPacientes = CsvLoader.cargarPacientesSLL(RUTA_PACIENTES);
 
         System.out.printf("Datos cargados: Citas Normal (%d), Citas Casi (%d), Inventario (%d), Pacientes (SLL OK)\n",
-                citasNormal.length, citasCasi.length, inventario.length);
+                citasNormal.length, citasCasiOrdenadas.length, inventario.length);
 
         System.out.println("\n---------------------------------------------------------");
-        System.out.println("A) EXPERIMENTOS DE ORDENACIÓN (Mediana de 10 Corridas)");
+        System.out.println("A) Resultados de ordenacion (Mediana de 10 Corridas)");
         System.out.println("---------------------------------------------------------");
         System.out.printf("| %-20s | %-15s | %-15s | %-15s | %-15s |\n",
-                "Dataset", "Algoritmo", "Comparaciones", "Swaps/Moves", "Tiempo (ns)");
+                "Dataset (n)", "Algoritmo", "Comparaciones", "Swaps", "Tiempo (ns)");
         System.out.println("---------------------------------------------------------");
 
         // Ejecutar los experimentos
-        ejecutarExperimentosOrdenacion(citasCasi, "Citas (100, Casi Ordenado)");
+        ejecutarExperimentosOrdenacion(citasCasiOrdenadas, "Citas (100, Casi Ordenado)");
         ejecutarExperimentosOrdenacion(inventario, "Inventario (500, Inverso)");
+       // ejecutarExperimentosOrdenacion(citasNormal, "Citas Normal (100, Ordenado)");
 
         // El arreglo de citas normal debe ordenarse UNA VEZ para la búsqueda binaria
         // Usamos el mismo Ordenador, sin necesidad de guardar métricas aquí.
@@ -73,7 +71,7 @@ public class Demo {
         ordenadorBase.bubbleSort(citasNormal);
 
         System.out.println("\n---------------------------------------------------------");
-        System.out.println("B) EXPERIMENTOS DE BÚSQUEDA");
+        System.out.println("B) Resultados de Busqueda ");
         System.out.println("---------------------------------------------------------");
 
         // B.1 Búsquedas en Lista Enlazada Simple (Pacientes)
@@ -191,14 +189,14 @@ public class Demo {
     }
 
     private static void ejecutarBusquedaPacientes(NodoPaciente head) {
-        System.out.println("\n--- Búsqueda en SLL y Arreglos (Salida Final en Tabla) ---");
+        System.out.println("\n--- Búsqueda en SLL y Arreglos ---");
 
         // Encabezado de la Tabla B
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------------");
         System.out.printf("| %-18s | %-25s | %-15s | %s\n", "Colección", "Clave/Predicado", "Método", "Salida");
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------------");
 
-        String apellidoBuscado = "Castro";
+        String apellidoBuscado = "Torres";
         int prioridadBuscada = 1;
 
         // --- BÚSQUEDA EN SLL PACIENTES ---
@@ -232,7 +230,7 @@ public class Demo {
         imprimirTablaBusqueda("Arreglo Inventario", "Stock: 50", "Centinela", outCentinela);
 
         // 2. Búsqueda Binaria (Citas ordenadas)
-        Cita claveBinaria = new Cita("N/A", "N/A", "2023-10-25T14:30");
+        Cita claveBinaria = new Cita("N/A", "N/A", "2025-03-14T11:30");
         int idxBinaria = BinarySearch.find(citasOrdenadas, claveBinaria);
         String outBinaria = idxBinaria != -1 ? "Índice " + idxBinaria + " (Cita: " + citasOrdenadas[idxBinaria].getFechaHora().toString() + ")" : "No encontrado";
         imprimirTablaBusqueda("Arreglo Citas", "Fecha exacta", "Binaria", outBinaria);

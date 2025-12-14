@@ -36,7 +36,6 @@ public class BinarySearch {
     /**
      * BINARY SEARCH BOUNDS (Lower Bound): Encuentra el índice del límite inferior.
      * Este es el índice del primer elemento MAYOR O IGUAL que la clave.
-     * (Requerido para la discusión de duplicados y rangos).
      * @param arr El arreglo DEBE estar ordenado.
      * @param key El objeto Comparable que define el límite inferior del rango.
      * @return El índice del lower bound.
