@@ -1,9 +1,25 @@
-#  MiniProyecto U2 – Agenda e Inventario Inteligentes
+# MiniProyecto U2 – Agenda e Inventario Inteligentes
 
 **Asignatura:** Estructura de Datos  
 **Unidad:** U2 – Ordenación y Búsqueda  
 **Lenguaje:** Java (JDK 17/21)  
 **Contexto:** Software de administración para el Hospital Veterinario de la UNL
+
+---
+
+## Tabla de contenidos
+
+1. [Descripción general](#descripción-general)
+2. [Objetivos](#objetivos)
+3. [Estructura del proyecto](#estructura-del-proyecto)
+4. [Funcionalidades implementadas](#funcionalidades-implementadas)
+    - [Agenda de citas (Arreglos)](#agenda-de-citas-arreglos)
+    - [Pacientes (Lista Simplemente Enlazada – SLL)](#pacientes-lista-simplemente-enlazada--sll)
+    - [Inventario (Arreglos)](#inventario-arreglos)
+5. [Instrumentación y medición](#instrumentación-y-medición)
+6. [Casos borde considerados](#casos-borde-considerados)
+7. [Ejecución del programa](#ejecución-del-programa)
+8. [Conclusión](#conclusión)
 
 ---
 
@@ -138,4 +154,3 @@ Todos los algoritmos de ordenación están instrumentados para medir:
 ##  Conclusión
 
 <p> El desarrollo de este miniproyecto permitió comprobar de manera práctica que no existe un algoritmo de ordenación o búsqueda universalmente óptimo, sino que su eficiencia depende del tipo de estructura de datos utilizada y de las características del conjunto de información procesado; mediante la instrumentación y medición de comparaciones, movimientos y tiempo de ejecución, fue posible evidenciar cómo algoritmos como Inserción se benefician de datos casi ordenados, mientras que Selección mantiene un comportamiento estable ante escenarios adversos, reforzando así la importancia de analizar el contexto antes de tomar decisiones de implementación en sistemas reales. </p>
----
