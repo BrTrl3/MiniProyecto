@@ -137,7 +137,7 @@ Todos los algoritmos de ordenación están instrumentados para medir:
 
 ---
 
-## ️ Ejecución del programa
+## ️Ejecución del programa
 
 1. Asegúrese de tener **JDK 17 o superior**.
 2. Compile el proyecto.
