@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class Demo {
+public class Runner {
 
     private static final String RUTA_CITAS_NORMAL = "src/data/citas_100.csv";
     private static final String RUTA_CITAS_CASI = "src/data/citas_100_casi_ordenadas.csv";
@@ -42,6 +42,7 @@ public class Demo {
 
 
     public static void main(String[] args) {
+
         System.out.println("----- MINI-PROYECTO U2 ED -----");
 
         // 1. CARGA DE DATOS
@@ -54,46 +55,27 @@ public class Demo {
         Ordenador ordenadorBase = new Ordenador();
         ordenadorBase.bubbleSort(citasNormal);
 
-        System.out.printf("Datos cargados: Citas Normal (%d), Citas Casi (%d), Inventario (%d), Pacientes (SLL OK)\n",
-                citasNormal.length, citasCasiOrdenadas.length, inventario.length);
+        System.out.printf(
+                "Datos cargados: Citas Normal (%d), Citas Casi (%d), Inventario (%d), Pacientes (SLL OK)\n",
+                citasNormal.length, citasCasiOrdenadas.length, inventario.length
+        );
 
-        // Inicio del menu
-        Scanner scanner = new Scanner(System.in);
-        int opcion;
+        // =====================================================
+        // TABLA A – ORDENACIÓN
+        // =====================================================
+        System.out.println("\n=== TABLA A: ORDENACIÓN ===");
+        ejecutarTablaOrdenacion(citasCasiOrdenadas, inventario);
 
-        do {
-            mostrarMenu();
-            opcion = scanner.nextInt();
+        // =====================================================
+        // TABLA B – BÚSQUEDA
+        // =====================================================
+        System.out.println("\n=== TABLA B: BÚSQUEDA ===");
+        ejecutarBusquedaPacientes(headPacientes);
+        ejecutarBusquedaArreglos(citasNormal, inventario);
 
-            switch (opcion) {
-                case 1:
-                    System.out.println("\n=== TABLA A: ORDENACIÓN ===");
-                    ejecutarTablaOrdenacion(citasCasiOrdenadas, inventario);
-                    break;
-
-                case 2:
-                    System.out.println("\n=== TABLA B: BÚSQUEDA ===");
-                    ejecutarBusquedaPacientes(headPacientes);
-                    ejecutarBusquedaArreglos(citasNormal, inventario);
-                    break;
-
-                case 3:
-                    System.out.println("\n=== EJECUCIÓN COMPLETA ===");
-                    ejecutarTablaOrdenacion(citasCasiOrdenadas, inventario);
-                    ejecutarBusquedaPacientes(headPacientes);
-                    ejecutarBusquedaArreglos(citasNormal, inventario);
-                    break;
-
-                case 4:
-                    System.out.println("Saliendo del programa...");
-                    break;
-
-                default:
-                    System.out.println("Opción inválida.");
-            }
-        } while (opcion != 4);
-        scanner.close();
+        System.out.println("\n--- FIN DE LA EJECUCIÓN ---");
     }
+
 
     // --- NUEVO MÉTODO PARA MOSTRAR EL MENÚ ---
     private static void mostrarMenu() {
