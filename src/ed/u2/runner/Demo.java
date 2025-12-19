@@ -107,7 +107,6 @@ public class Demo {
         System.out.print("Seleccione una opción: ");
     }
 
-
     // ---MÉTODO PARA ENCAPSULAR LA IMPRESIÓN DE LA TABLA A ---
     private static void ejecutarTablaOrdenacion(Cita[] citasCasiOrdenadas, Insumo[] inventario) {
         System.out.println("\n---------------------------------------------------------");
@@ -214,13 +213,6 @@ public class Demo {
         long medianComps = comps.get(3);
         long medianSwaps = swaps.get(3);
 
-        String notas = "";
-        if (dataset.contains("Casi")) {
-            notas = algoritmo.equals("InsertionSort") ? "Mejor caso ≈ O(n) - Insertion gana" : "Mayor número de swaps";
-        } else { // Inverso
-            notas = algoritmo.equals("SelectionSort") ? "Comparaciones constantes ≈ n(n-1)/2" : "Penalización cuadrática en swaps";
-        }
-
         // 5. Imprimir la fila de la tabla
         System.out.printf("| %-20s | %-15s | %-15d | %-15d | %-15d |\n",
                 dataset, algoritmo, medianComps, medianSwaps, medianTime);
@@ -244,7 +236,7 @@ public class Demo {
         System.out.printf("| %-18s | %-25s | %-15s | %s\n", "Colección", "Clave/Predicado", "Método", "Salida");
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------------");
 
-        String apellidoBuscado = "Jaramillo";
+        String apellidoBuscado = "Torres";
         int prioridadBuscada = 1;
 
         // --- BÚSQUEDA EN SLL PACIENTES ---
@@ -287,7 +279,7 @@ public class Demo {
         imprimirTablaBusqueda("Arreglo Citas", "Fecha exacta", "Binaria", outBinaria);
 
         // 3. Lower Bound (Inventario - Rangos)
-        Insumo claveLowerBound = new Insumo("N/A", "Clave", 200);
+        Insumo claveLowerBound = new Insumo("", "", 200);
         int idxLower = BinarySearch.lowerBound(inventarioOrdenado, claveLowerBound);
         String outLower = idxLower < inventarioOrdenado.length ? "Índice " + idxLower + " (Stock: " + inventarioOrdenado[idxLower].getStock() + ")" : "Índice fuera de límites";
         imprimirTablaBusqueda("Arreglo Inventario", "Stock >= 200 (Lower Bound)", "Binaria", outLower);
