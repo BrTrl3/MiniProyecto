@@ -107,8 +107,8 @@ public class Demo {
         System.out.print("Seleccione una opción: ");
     }
 
-    // ---MÉTODO PARA ENCAPSULAR LA IMPRESIÓN DE LA TABLA A ---
-    private static void ejecutarTablaOrdenacion(Cita[] citasCasiOrdenadas, Insumo[] inventario) {
+    // ---MÉTODO PARA IMPRESIÓN DE LA TABLA A ---
+    private static <T extends Comparable<T>> void ejecutarTablaOrdenacion(Cita[] citasCasiOrdenadas, Insumo[] inventario) {
         System.out.println("\n---------------------------------------------------------");
         System.out.println("A) Resultados de ordenacion (Mediana de 10 Corridas)");
         System.out.println("---------------------------------------------------------");
