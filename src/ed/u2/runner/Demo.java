@@ -222,19 +222,19 @@ public class Demo {
     // MÉTODOS DE BÚSQUEDA
     // -------------------------------------------------------------------
 
-    private static void imprimirTablaBusqueda(String coleccion, String clave, String metodo, String salida) {
+    private static void imprimirTablaBusqueda(String coleccion, String clave, String metodo, String salida, boolean correcto) {
         // Usamos printf para alinear las columnas
-        System.out.printf("| %-18s | %-25s | %-15s | %s\n",
-                coleccion, clave, metodo, salida);
+        System.out.printf("| %-18s | %-25s | %-18s | %-50s | %-8s \n",
+                coleccion, clave, metodo, salida, correcto ? "Si" : "No");
     }
 
     private static void ejecutarBusquedaPacientes(NodoPaciente head) {
         System.out.println("\n--- Búsqueda en SLL y Arreglos ---");
 
         // Encabezado de la Tabla B
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("| %-18s | %-25s | %-15s | %s\n", "Colección", "Clave/Predicado", "Método", "Salida");
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("| %-18s | %-25s | %-18s | %-50s | %-8s |\n", "Colección", "Clave/Predicado", "Método", "Salida", "Correcto");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         String apellidoBuscado = "Torres";
         int prioridadBuscada = 1;
@@ -243,18 +243,22 @@ public class Demo {
 
         // 1. Primera coincidencia
         NodoPaciente first = SequentialSearch.findFirstPacienteByApellido(head, apellidoBuscado);
+        boolean correctoFirst = first != null && first.getDato().getApellido().equalsIgnoreCase(apellidoBuscado);
         String outFirst = first != null ? first.getDato().toString() : "No encontrado";
-        imprimirTablaBusqueda("SLL Pacientes", "Apellido '" + apellidoBuscado + "' (1er)", "Secuencial", outFirst);
+        imprimirTablaBusqueda("SLL Pacientes", "Apellido '" + apellidoBuscado + "' (1er)", "Secuencial", outFirst, correctoFirst);
 
         // 2. Última coincidencia
         NodoPaciente last = SequentialSearch.findLastPacienteByApellido(head, apellidoBuscado);
+        boolean correctoLast = first != null && last.getDato().getApellido().equalsIgnoreCase(apellidoBuscado);
         String outLast = last != null ? last.getDato().toString() : "No encontrado";
-        imprimirTablaBusqueda("SLL Pacientes", "Apellido '" + apellidoBuscado + "' (Últ)", "Secuencial", outLast);
+        imprimirTablaBusqueda("SLL Pacientes", "Apellido '" + apellidoBuscado + "' (Últ)", "Secuencial", outLast, correctoLast);
 
         // 3. FindAll (Prioridad == 1)
         List<Paciente> prioridadAlta = SequentialSearch.findAllPacientesByPrioridad(head, prioridadBuscada);
+        boolean correctoFindAll = prioridadAlta.stream()
+                .allMatch(p -> p.getPrioridad() == prioridadBuscada);
         String outFindAll = "Total: " + prioridadAlta.size() + ". Ej: " + (prioridadAlta.isEmpty() ? "N/A" : prioridadAlta.get(0).getApellido());
-        imprimirTablaBusqueda("SLL Pacientes", "Prioridad == " + prioridadBuscada, "Secuencial (FindAll)", outFindAll);
+        imprimirTablaBusqueda("SLL Pacientes", "Prioridad == " + prioridadBuscada, "Secuencial (FindAll)", outFindAll, correctoFindAll);
     }
 
     private static void ejecutarBusquedaArreglos(Cita[] citasOrdenadas, Insumo[] inventarioOrdenado) {
@@ -263,26 +267,33 @@ public class Demo {
 
         Ordenador ordenadorInv = new Ordenador();
         ordenadorInv.selectionSort(inventarioOrdenado);  // O insertion, pero selection mantiene comparaciones fijas
+
         // --- BÚSQUEDA EN ARREGLOS ---
 
         // 1. Búsqueda Lineal Centinela (Inventario)
         Insumo claveCentinela = new Insumo("", "", 50);
         int idxCentinela = SequentialSearch.linearSearchCentinela(inventarioOrdenado, claveCentinela);
+        boolean correctoCentinela = idxCentinela != -1 &&
+                inventarioOrdenado[idxCentinela].getStock() == 50;
         String outCentinela = idxCentinela != -1 ? "Índice " + idxCentinela + " (Insumo: " + inventarioOrdenado[idxCentinela].getStock() + ")" : "No encontrado";
-        imprimirTablaBusqueda("Arreglo Inventario", "Stock: 50", "Centinela", outCentinela);
+        imprimirTablaBusqueda("Arreglo Inventario", "Stock: 50", "Centinela", outCentinela, correctoCentinela);
 
         // 2. Búsqueda Binaria (Citas ordenadas)
         Cita claveBinaria = new Cita("", "", "2025-03-14T11:30");
         int idxBinaria = BinarySearch.find(citasOrdenadas, claveBinaria);
+        boolean correctoBinaria = idxBinaria != -1 &&
+                citasOrdenadas[idxBinaria].compareTo(claveBinaria) == 0;
         String outBinaria = idxBinaria != -1 ? "Índice " + idxBinaria + " (Cita: " + citasOrdenadas[idxBinaria].getFechaHora().toString() + ")" : "No encontrado";
         //String outBinaria = idxBinaria != -1? "Índice " + idxBinaria + " (no garantizado por duplicados)": "No encontrado";
-        imprimirTablaBusqueda("Arreglo Citas", "Fecha exacta", "Binaria", outBinaria);
+        imprimirTablaBusqueda("Arreglo Citas", "Fecha exacta", "Binaria", outBinaria,  correctoBinaria);
 
         // 3. Lower Bound (Inventario - Rangos)
         Insumo claveLowerBound = new Insumo("", "", 200);
         int idxLower = BinarySearch.lowerBound(inventarioOrdenado, claveLowerBound);
+        boolean correctoLower = idxLower < inventarioOrdenado.length &&
+                inventarioOrdenado[idxLower].getStock() >= 200;
         String outLower = idxLower < inventarioOrdenado.length ? "Índice " + idxLower + " (Stock: " + inventarioOrdenado[idxLower].getStock() + ")" : "Índice fuera de límites";
-        imprimirTablaBusqueda("Arreglo Inventario", "Stock >= 200 (Lower Bound)", "Binaria", outLower);
+        imprimirTablaBusqueda("Arreglo Inventario", "Stock >= 200 (Lower Bound)", "Binaria", outLower, correctoLower);
 
         // Cierre de tabla
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------------");
