@@ -112,10 +112,6 @@ public class Ordenador {
         }
     }
 
-    // ------------------------------------------------------------------
-    //                         UTILIDADES
-    // ------------------------------------------------------------------
-
     /**
      * Método auxiliar para intercambiar dos elementos en el arreglo.
      * Incrementa el contador de swaps.
